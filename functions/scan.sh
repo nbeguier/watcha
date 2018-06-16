@@ -8,8 +8,15 @@ function get_ip_simple {
     get_ip | awk -F/ '{print $1}'
 }
 
-function get_rand_ip_simple {
-    get_ip_simple | awk -F. '{print $1"."$2"."$3".1"}'
+function get_rand_ip_complex {
+    for last_octet in $(seq 1 254)
+    do
+        IP_CANDIDATE=$(get_ip_simple | awk -F. -v var="$last_octet" '{print $1"."$2"."$3"."var}')
+        if ! ping -c 1 -w 1 "${IP_CANDIDATE}" >/dev/null 2>&1; then
+            echo "${IP_CANDIDATE}"
+            break
+        fi
+    done
 }
 
 function get_network {

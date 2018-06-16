@@ -1,5 +1,12 @@
 #!/bin/bash
 
+function link_21 {
+    if grep -q '21/OPEN/ftp' /tmp/.watcha.output; then
+        echo "${YELLOW}FTP link:${NATIVE}"
+        grep '21/OPEN/ftp' /tmp/.watcha.output | awk '{print "    tools/ftp.sh "$1" admin password"}'
+    fi
+}
+
 function link_22 {
     if grep -q '22/OPEN/ssh' /tmp/.watcha.output; then
         echo "${YELLOW}SSH link:${NATIVE}"
@@ -24,7 +31,7 @@ function link_443 {
 function link_445 {
     if grep -q '445/OPEN/microsoft-ds' /tmp/.watcha.output; then
         echo "${YELLOW}SAMBA link:${NATIVE}"
-        grep '445/OPEN/microsoft-ds' /tmp/.watcha.output | awk '{print "    smbclient -L //"$1" -U guest --no-pass"}'
+        grep '445/OPEN/microsoft-ds' /tmp/.watcha.output | awk '{print "    tools/samba.sh "$1}'
     fi
 }
 

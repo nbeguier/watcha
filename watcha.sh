@@ -27,8 +27,7 @@ source "$(dirname $0)"/functions/scan.sh
 source "$(dirname $0)"/functions/link.sh
 source "$(dirname $0)"/functions/help.sh
 
-# SPOOF=$(get_rand_ip_simple)
-# SPOOF=10.1.2.3
+SPOOF=$(get_rand_ip_complex)
 IP=$(get_ip)
 
 # Stop if no IP
@@ -70,6 +69,7 @@ scan_host
 echo ""
 echo "${BOLD}====LINK====${NATIVE}"
 
+link_21
 link_22
 link_80
 link_443
