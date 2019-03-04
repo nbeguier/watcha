@@ -12,7 +12,7 @@ function get_rand_ip_complex {
     for last_octet in $(seq 1 254)
     do
         IP_CANDIDATE=$(get_ip_simple | awk -F. -v var="$last_octet" '{print $1"."$2"."$3"."var}')
-        if ! ping -c 1 -w 1 "${IP_CANDIDATE}" >/dev/null 2>&1; then
+        if ! ping -c 1 -W 1 "${IP_CANDIDATE}" >/dev/null 2>&1; then
             echo "${IP_CANDIDATE}"
             break
         fi
@@ -21,6 +21,10 @@ function get_rand_ip_complex {
 
 function get_network {
     ipcalc -n "$(get_ip)" | grep 'Network:' | awk '{print $2}'
+}
+
+function get_gateway {
+    ip route | grep "${DEV}" | grep default | awk '{print $3}'
 }
 
 function get_n_24 {
@@ -56,8 +60,10 @@ function scan_host {
     for subnet in $(get_subnetwork)
     do
         if [ -n "${SPOOF}" ]; then
+            if $VERBOSE; then echo ">> " sudo nmap -sS -p "${PORTS}" -Pn -n -S "${SPOOF}" -e "${DEV}" "${subnet}"; fi
             sudo nmap -sS -p "${PORTS}" -Pn -n -S "${SPOOF}" -e "${DEV}" -oG /tmp/.watcha.subnet "${subnet}" >/dev/null
         else
+            if $VERBOSE; then echo ">> " sudo nmap -sS -p "${PORTS}" -Pn -n "${subnet}"; fi
             sudo nmap -sS -p "${PORTS}" -Pn -n -oG /tmp/.watcha.subnet "${subnet}" >/dev/null
         fi
         grep -v ^# /tmp/.watcha.subnet | grep 'Ports:' | awk '{$1=""; $3=""; $4=""; print $0}' | 

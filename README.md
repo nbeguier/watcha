@@ -3,13 +3,17 @@
 ## Usage
 
 ```bash
-./watcha.sh <interface name>
+./watcha.sh [-h,--help] [-v,--verbose] -i interface
 ```
 
 ## Installation
 
 ```
+# Linux Debian/Ubuntu
 apt-get install bc sudo ipcalc nmap
+
+# MacOS
+brew install bc sudo ipcalc nmap iproute2mac
 ```
 
 ## Introduction
@@ -30,11 +34,12 @@ The nmap should be a little bit discret (usage of Spoofing IP not really simple)
 ## Example
 
 ```
-$ ./watcha.sh wlp4s0
+$ ./watcha.sh -i wlp4s0
 
 Device:     wlp4s0
 IP:         192.168.0.11/24
 Network:    192.168.0.0/24
+Gateway:    192.168.0.1
 Spoofed IP: 192.168.0.4
 
 ====SCAN====

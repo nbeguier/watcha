@@ -6,6 +6,7 @@ function help_22 {
     fi
     for ipaddress in $(grep '22/OPEN/ssh' /tmp/.watcha.output | awk '{print $1}')
     do
+        if $VERBOSE; then echo ">> " curl -sLk --connect-timeout 2 --max-time 2 -A '""' http://"$ipaddress":22/ 2>/dev/null; fi
         echo "    ${ipaddress}  ==> ${BLUE}$(curl -sLk --connect-timeout 2 --max-time 2 -A \"\" http://"$ipaddress":22/ 2>/dev/null)${NATIVE}"
     done
 }
@@ -16,6 +17,7 @@ function help_80 {
     fi
     for ipaddress in $(grep '80/OPEN/http' /tmp/.watcha.output | awk '{print $1}')
     do
+        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' http://"$ipaddress":80/ "| grep 'Server: ' | tail -1"; fi
         echo "    http://${ipaddress}:80/  ==> ${BLUE}$(curl -sILk  --connect-timeout 2 --max-time 2 -A \"\" http://"$ipaddress":80/ | grep 'Server: ' | tail -1)${NATIVE}"
     done
 }
@@ -26,6 +28,7 @@ function help_443 {
     fi
     for ipaddress in $(grep '443/OPEN/https' /tmp/.watcha.output | awk '{print $1}')
     do
+        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' https://"$ipaddress":443/ "| grep 'Server: ' | tail -1"; fi
         echo "    https://${ipaddress}:443/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" https://"$ipaddress":443/ | grep 'Server: ' | tail -1)${NATIVE}"
     done
 }
@@ -36,6 +39,7 @@ function help_445 {
     fi
     for ipaddress in $(grep '445/OPEN/microsoft-ds' /tmp/.watcha.output | awk '{print $1}')
     do
+        if $VERBOSE; then echo ">> " smbclient -L //"${ipaddress}" -U guest --no-pass; fi
         echo "    smbclient -L //${ipaddress} -U guest --no-pass  ==> $(smbclient -L //"${ipaddress}" -U guest --no-pass >/dev/null 2>&1 && echo -e "${GREEN}" smbclient //"${ipaddress}"/\<Sharename\> -U guest --no-pass)${NATIVE}"
     done
 }
@@ -46,6 +50,7 @@ function help_8080 {
     fi
     for ipaddress in $(grep '8080/OPEN/http-proxy' /tmp/.watcha.output | awk '{print $1}')
     do
+        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' http://"$ipaddress":8080/ "| grep 'Server: ' | tail -1"; fi
         echo "    http://${ipaddress}:8080/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" http://"$ipaddress":8080/ | grep 'Server: ' | tail -1)${NATIVE}"
     done
 }
@@ -59,8 +64,10 @@ function help_mac {
     do
         echo "${ipaddress}"
         if [ -n "${SPOOF}" ]; then
+            if $VERBOSE; then echo ">> " sudo nmap -sS -Pn -n -S "${SPOOF}" -e "${DEV}" "${ipaddress}" -p 1 "| grep 'MAC Address: '"; fi
             sudo nmap -sS -Pn -n -S "${SPOOF}" -e "${DEV}" "${ipaddress}" -p 1 | grep 'MAC Address: '
         else
+            if $VERBOSE; then echo ">> " sudo nmap -sS -Pn -n "${ipaddress}" -p 1 "| grep 'MAC Address: '"; fi
             sudo nmap -sS -Pn -n "${ipaddress}" -p 1 | grep 'MAC Address: '
         fi
     done
