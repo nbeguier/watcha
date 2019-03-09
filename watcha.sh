@@ -9,8 +9,15 @@ BLUE="${ESC}[94m"
 NATIVE="${ESC}[m"
 VERBOSE=false
 
+function check_binary() {
+    which $1 >/dev/null
+    if [ $? -ne 0 ]; then echo "You have to install $1"; exit 1; fi
+}
+
 display_usage() { 
-    echo -e "Usage:\n$0 [-h,--help] [-v,--verbose] -i interface \n" 
+    echo -e "Usage:\n$0 [-h,--help] [-v,--verbose] -i interface"
+    check_binary ip
+    echo "Interfaces available: $(echo $(ip a | grep -v '^\t' | awk -F ':' '{print $1}'))"
 }
 
 POSITIONAL=()
@@ -45,11 +52,6 @@ if [  "${DEV}" == '' ]; then
     display_usage
     exit 1
 fi
-
-function check_binary() {
-    which $1 >/dev/null
-    if [ $? -ne 0 ]; then echo "You have to install $1"; exit 1; fi
-}
 
 check_binary nmap
 check_binary ipcalc
