@@ -24,7 +24,7 @@ function link_80 {
 function link_443 {
     if grep -q '443/OPEN/https' /tmp/.watcha.output; then
         echo "${YELLOW}HTTPS link:${NATIVE}"
-        grep '443/OPEN/https' /tmp/.watcha.output | awk '{print "    curl -Ak \"\" https://"$1":443/ >/dev/null -vs"}'
+        grep '443/OPEN/https' /tmp/.watcha.output | awk '{print "    curl -kA \"\" https://"$1":443/ >/dev/null -vs"}'
     fi
 }
 

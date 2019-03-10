@@ -30,6 +30,8 @@ function help_443 {
     do
         if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' https://"$ipaddress":443/ "| grep 'Server: ' | tail -1"; fi
         echo "    https://${ipaddress}:443/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" https://"$ipaddress":443/ | grep 'Server: ' | tail -1)${NATIVE}"
+        if $VERBOSE; then echo ">> " curl -vsk  --connect-timeout 2 --max-time 2 -A '""' https://"$ipaddress":443/ " 2>&1 >/dev/null | grep 'subject: ' | tail -1"; fi
+        echo "    https://${ipaddress}:443/  ==> ${BLUE}$(curl -vsk --connect-timeout 2 --max-time 2 -A \"\" https://"$ipaddress":443/ 2>&1 >/dev/null | grep 'subject: ' | tail -1)${NATIVE}"
     done
 }
 
@@ -54,7 +56,6 @@ function help_8080 {
         echo "    http://${ipaddress}:8080/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" http://"$ipaddress":8080/ | grep 'Server: ' | tail -1)${NATIVE}"
     done
 }
-
 
 function help_mac {
     if grep -q 'OPEN' /tmp/.watcha.output; then
