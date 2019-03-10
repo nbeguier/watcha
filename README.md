@@ -10,10 +10,10 @@
 
 ```
 # Linux Debian/Ubuntu
-apt-get install bc sudo ipcalc nmap
+apt-get install bc sudo ipcalc nmap dig
 
 # MacOS
-brew install bc sudo ipcalc nmap iproute2mac
+brew install bc sudo ipcalc nmap iproute2mac dig
 ```
 
 ## Introduction
@@ -72,4 +72,31 @@ MAC help:
 MAC Address: 18:1E:78:CE:B5:3C (Sagemcom Broadband SAS)
 192.168.0.2
 MAC Address: 8C:10:D4:D2:D7:36 (Sagemcom Broadband SAS)
+```
+
+```
+$ ./tools/resolver.sh
+192.168.0.2 <=> something.local.
+192.168.0.29 <=> iphone-someone.local.
+```
+
+```
+$ ./tools/upnp.sh wlp4s0
+found 0 associations
+found 1 connections:
+     1: flags=92<CONNECTED,BOUND_IF,PREFERRED>
+  outif (null)
+  src 192.168.0.99 port 54830
+  dst 239.255.255.250 port 1900
+  rank info not available
+
+Connection to 239.255.255.250 port 1900 [udp/ssdp] succeeded!
+
+Be patient, wait a minute... (Ctrl+C to stop)
+
+Location: http://192.168.0.10:6060
+Name: LABOXDXXX
+Server: Sagemcom STB WebService Controler
+Location: http://192.168.0.1:80/RootDevice.xml
+Server: UPnP/1.0 UPnP/1.0 UPnP-Device-Host/1.0
 ```
