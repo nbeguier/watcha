@@ -48,3 +48,10 @@ function link_8080 {
         grep '8080/OPEN/http-proxy' /tmp/.watcha.output | awk '{print "    curl -A \"\" http://"$1":8080/ >/dev/null -vs"}'
     fi
 }
+
+function link_9000 {
+    if grep -q '9000/OPEN/cslistener' /tmp/.watcha.output; then
+        echo "${YELLOW}Port 9000 link:${NATIVE}"
+        grep '9000/OPEN/cslistener' /tmp/.watcha.output | awk '{print "    curl -A \"\" http://"$1":9000/ >/dev/null -vs"}'
+    fi
+}

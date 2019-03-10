@@ -57,6 +57,21 @@ function help_8080 {
     done
 }
 
+function help_9000 {
+    if grep -q '9000/OPEN/cslistener' /tmp/.watcha.output; then
+        echo "${YELLOW}Port 9000 help:${NATIVE}"
+    fi
+    for ipaddress in $(grep '9000/OPEN/cslistener' /tmp/.watcha.output | awk '{print $1}')
+    do
+        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' http://"$ipaddress":9000/ "| grep 'Server: ' | tail -1"; fi
+        echo "    http://${ipaddress}:9000/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" http://"$ipaddress":9000/ | grep 'Server: ' | tail -1)${NATIVE}"
+        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' https://"$ipaddress":9000/ "| grep 'Server: ' | tail -1"; fi
+        echo "    https://${ipaddress}:9000/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" https://"$ipaddress":9000/ | grep 'Server: ' | tail -1)${NATIVE}"
+        if $VERBOSE; then echo ">> " curl -vsk  --connect-timeout 2 --max-time 2 -A '""' https://"$ipaddress":9000/ " 2>&1 >/dev/null | grep 'subject: ' | tail -1"; fi
+        echo "    https://${ipaddress}:9000/  ==> ${BLUE}$(curl -vsk --connect-timeout 2 --max-time 2 -A \"\" https://"$ipaddress":9000/ 2>&1 >/dev/null | grep 'subject: ' | tail -1)${NATIVE}"
+    done
+}
+
 function help_mac {
     if grep -q 'OPEN' /tmp/.watcha.output; then
         echo "${YELLOW}MAC help:${NATIVE}"
