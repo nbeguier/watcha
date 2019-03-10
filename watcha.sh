@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PORTS='21,22,25,80,443,445,8080'
+PORTS='21,22,25,80,443,445,2049,8080'
 ESC=$(printf '\033')
 BOLD="${ESC}[1m"
 GREEN="${ESC}[92m"
@@ -111,6 +111,7 @@ link_22
 link_80
 link_443
 link_445
+link_2049
 link_8080
 
 # HELP

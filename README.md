@@ -29,6 +29,7 @@ The nmap should be a little bit discret (usage of Spoofing IP not really simple)
   - SMTP (scanned, not helped)
   - **HTTP / HTTPS / HTTP-PROXY** (discret curl, display server name)
   - **SAMBA** (display guest command, helpful script, auto-test guest no-password credentials)
+  - **NFS** (display command to list exported directories)
 
 
 ## Example
@@ -47,23 +48,30 @@ Spoofed IP: 192.168.0.4
 ====SCAN====
 ... tail -f /tmp/.watcha.output
 
- 192.168.0.1   21/closed/ftp, 22/closed/ssh, 25/closed/smtp, 80/OPEN/http, 443/closed/https, 445/closed/microsoft-ds, 8080/closed/http-proxy
- 192.168.0.2   21/OPEN/ftp, 22/closed/ssh, 25/closed/smtp, 80/OPEN/http, 443/closed/https, 445/OPEN/microsoft-ds, 8080/closed/http-proxy
- 192.168.0.3   21/closed/ftp, 22/closed/ssh, 25/closed/smtp, 80/closed/http, 443/closed/https, 445/closed/microsoft-ds, 8080/closed/http-proxy
- 192.168.0.10   21/closed/ftp, 22/closed/ssh, 25/closed/smtp, 80/closed/http, 443/closed/https, 445/closed/microsoft-ds, 8080/closed/http-proxy
- 192.168.0.12   21/filtered/ftp, 22/filtered/ssh, 25/filtered/smtp, 80/filtered/http, 443/filtered/https, 445/filtered/microsoft-ds, 8080/filtered/http-proxy
- 192.168.0.13   21/filtered/ftp, 22/filtered/ssh, 25/filtered/smtp, 80/filtered/http, 443/filtered/https, 445/filtered/microsoft-ds, 8080/filtered/http-proxy
+ 192.168.0.1 80/OPEN/http
+ 192.168.0.2 21/OPEN/ftp 80/OPEN/http 445/OPEN/microsoft-ds
+ 192.168.0.3
+ 192.168.0.10 2049/OPEN/nfs
+ 192.168.0.12 21/filtered/ftp 22/filtered/ssh 25/filtered/smtp 80/filtered/http 443/filtered/https 445/filtered/microsoft-ds 2049/filtered/nfs 8080/filtered/http-proxy
+ 192.168.0.13
+ 192.168.0.29 22/OPEN/ssh
 
 ====LINK====
 FTP link:
     tools/ftp.sh 192.168.0.2 admin password
+SSH link:
+    ssh -l root -i /dev/null 192.168.0.29
 HTTP link:
     curl -A "" http://192.168.0.1:80/ >/dev/null -vs
     curl -A "" http://192.168.0.2:80/ >/dev/null -vs
 SAMBA link:
-    tools/ftp.sh 192.168.0.2
+    tools/samba.sh 192.168.0.2
+NFS link:
+    showmount -e 192.168.0.10; mkdir /tmp/export; mount -t nfs 192.168.0.10:/PATH /tmp/export
 
 ====HELP====
+SSH help:
+    192.168.0.29  ==> SSH-2.0-OpenSSH_6.7p1 Debian-5+deb8u7
 HTTP help:
     http://192.168.0.1:80/  ==> 
     http://192.168.0.2:80/  ==> Server: lighttpd/1.4.31
@@ -71,9 +79,13 @@ SAMBA help:
     smbclient -L //192.168.0.2 -U guest --no-pass  ==>  smbclient //192.168.0.2/<Sharename> -U guest --no-pass
 MAC help:
 192.168.0.1
-MAC Address: 18:1E:78:CE:B5:3C (Sagemcom Broadband SAS)
+MAC Address: 18:1E:78:CE:XX:XX (Sagemcom Broadband SAS)
 192.168.0.2
-MAC Address: 8C:10:D4:D2:D7:36 (Sagemcom Broadband SAS)
+MAC Address: 8C:10:D4:D2:XX:XX (Sagemcom Broadband SAS)
+192.168.0.10
+MAC Address: 8C:10:D4:D2:XX:XX (Sagemcom Broadband SAS)
+192.168.0.29
+MAC Address: B8:27:EB:28:XX:XX (Raspberry Pi Foundation)
 ```
 
 ### .local resolver

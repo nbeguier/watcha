@@ -35,6 +35,13 @@ function link_445 {
     fi
 }
 
+function link_2049 {
+    if grep -q '2049/OPEN/nfs' /tmp/.watcha.output; then
+        echo "${YELLOW}NFS link:${NATIVE}"
+        grep '2049/OPEN/nfs' /tmp/.watcha.output | awk '{print "    showmount -e "$1"; mkdir /tmp/export; mount -t nfs "$1":/PATH /tmp/export"}'
+    fi
+}
+
 function link_8080 {
     if grep -q '8080/OPEN/http-proxy' /tmp/.watcha.output; then
         echo "${YELLOW}HTTP-PROXY link:${NATIVE}"

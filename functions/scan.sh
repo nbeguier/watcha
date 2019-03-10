@@ -70,7 +70,10 @@ function scan_host {
             sed "s#closed/tcp/#closed#g" |
             sed "s#filtered/tcp/#filtered#g" |
             sed "s#open/tcp/#OPEN#g" |
-            sed "s#///##g" >> /tmp/.watcha.output
+            sed 's#[0-9]*/closed/[a-z\-]*##g' |
+            sed 's#,##g' |
+            sed "s#///##g" |
+            tr -s ' ' >> /tmp/.watcha.output
     done
     sudo rm -f /tmp/.watcha.subnet
     sed "s#OPEN#${GREEN}OPEN${NATIVE}#g" /tmp/.watcha.output
