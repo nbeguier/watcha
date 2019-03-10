@@ -33,6 +33,8 @@ The nmap should be a little bit discret (usage of Spoofing IP not really simple)
 
 ## Example
 
+### WATCHA
+
 ```
 $ ./watcha.sh -i wlp4s0
 
@@ -74,11 +76,15 @@ MAC Address: 18:1E:78:CE:B5:3C (Sagemcom Broadband SAS)
 MAC Address: 8C:10:D4:D2:D7:36 (Sagemcom Broadband SAS)
 ```
 
+### .local resolver
+
 ```
 $ ./tools/resolver.sh
 192.168.0.2 <=> something.local.
 192.168.0.29 <=> iphone-someone.local.
 ```
+
+### UPNP
 
 ```
 $ ./tools/upnp.sh wlp4s0
@@ -93,10 +99,37 @@ found 1 connections:
 Connection to 239.255.255.250 port 1900 [udp/ssdp] succeeded!
 
 Be patient, wait a minute... (Ctrl+C to stop)
+After the run, you could try a 'tools/upnp_help.sh'
 
 Location: http://192.168.0.10:6060
 Name: LABOXDXXX
 Server: Sagemcom STB WebService Controler
 Location: http://192.168.0.1:80/RootDevice.xml
 Server: UPnP/1.0 UPnP/1.0 UPnP-Device-Host/1.0
+```
+
+```
+$ ./tools/upnp_help.sh
+Sort Location:
+--------------
+Location: http://192.168.0.10:6060
+Location: http://192.168.0.1:80/RootDevice.xml
+Help: curl -svLk  --connect-timeout 2 --max-time 2 -A "" LOCATION
+
+Sort Name:
+----------
+Name: LABOXDXXX
+
+Sort Server:
+----------
+Server: Sagemcom STB WebService Controler
+Server: UPnP/1.0 UPnP/1.0 UPnP-Device-Host/1.0
+
+Sort source IP:
+---------------
+192.168.0.1.1900
+192.168.0.1.1901
+192.168.0.10.53700
+192.168.0.2.1900
+192.168.0.99.63179
 ```

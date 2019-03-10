@@ -19,6 +19,7 @@ nc -b "$inet" -w 1 -uvv 239.255.255.250 1900 >/dev/null < /tmp/ssdp_discover.txt
 
 
 echo "Be patient, wait a minute... (Ctrl+C to stop)"
+echo "After the run, you could try a 'tools/upnp_help.sh'"
 tail -f /tmp/trace | grep -A8 -B1 NOTIFY | grep '^Location\|^Server\|^Name'
 
 wait
