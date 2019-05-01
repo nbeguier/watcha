@@ -46,6 +46,17 @@ function help_445 {
     done
 }
 
+function help_2049 {
+    if grep -q '2049/OPEN/nfs' /tmp/.watcha.output; then
+        echo "${YELLOW}NFS help:${NATIVE}"
+    fi
+    for ipaddress in $(grep '2049/OPEN/nfs' /tmp/.watcha.output | awk '{print $1}')
+    do
+        if $VERBOSE; then echo ">>  showmount -e "$ipaddress; fi
+        echo "    showmount -e ${ipaddress}  ==> ${BLUE}$(showmount -e $ipaddress)${NATIVE}"
+    done
+}
+
 function help_8080 {
     if grep -q '8080/OPEN/http-proxy' /tmp/.watcha.output; then
         echo "${YELLOW}HTTP-PROXY help:${NATIVE}"

@@ -77,6 +77,9 @@ HTTP help:
     http://192.168.0.2:80/  ==> Server: lighttpd/1.4.31
 SAMBA help:
     smbclient -L //192.168.0.2 -U guest --no-pass  ==>  smbclient //192.168.0.2/<Sharename> -U guest --no-pass
+NFS help:
+    showmount -e 192.168.0.10  ==> Exports list on 192.168.0.10:
+/home/test                           192.168.0.0/24
 MAC help:
 192.168.0.1
 MAC Address: 18:1E:78:CE:XX:XX (Sagemcom Broadband SAS)
