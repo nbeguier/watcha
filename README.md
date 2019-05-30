@@ -32,7 +32,16 @@ The nmap should be a little bit discret (usage of Spoofing IP not really simple)
   - **NFS** (display command to list exported directories)
 
 
-## Example
+## Hidding
+
+### Spoof MAC
+
+```
+$ ./tools/spoof_mac.sh wlp4s0
+```
+
+
+## Discovery
 
 ### WATCHA
 
