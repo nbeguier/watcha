@@ -101,6 +101,8 @@ $ ./tools/resolver.sh
 
 ### UPNP
 
+If you see your IP in the response, you should disable UPNP immediatly.
+
 ```
 $ ./tools/upnp.sh wlp4s0
 found 0 associations
@@ -147,4 +149,33 @@ Sort source IP:
 192.168.0.10.53700
 192.168.0.2.1900
 192.168.0.99.63179
+```
+
+To discover each XML document, you should use https://github.com/tenable/upnp_info
+
+### Listener : Display all IPs
+
+```
+$ ./tools/listener.sh
+Be patient, wait a minute... (Ctrl+C to stop)
+After the run, you could try a 'tools/listener_help.sh'
+```
+
+```
+$ tools/listener_help.sh
+Source hosts:
+=============
+8.8.8.8
+127.0.0.1
+192.168.0.1
+192.168.0.2
+192.168.0.10
+
+Destination hosts:
+==================
+8.8.8.8
+127.0.0.1
+192.168.0.23
+192.168.0.255
+255.255.255.255
 ```

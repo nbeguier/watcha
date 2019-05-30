@@ -10,14 +10,13 @@ NATIVE="${ESC}[m"
 VERBOSE=false
 
 function check_binary() {
-    which $1 >/dev/null
-    if [ $? -ne 0 ]; then echo "You have to install $1"; exit 1; fi
+    if ! command -v "${1}" >/dev/null; then echo "You have to install $1"; exit 1; fi
 }
 
 display_usage() { 
     echo -e "Usage:\n$0 [-h,--help] [-v,--verbose] -i interface"
     check_binary ip
-    echo "Interfaces available: $(echo $(ip a | grep -v '^\t' | awk -F ':' '{print $1}'))"
+    echo "Interfaces available: $(ip a | grep -v '^\t' | awk -F ':' '{print $1}')"
 }
 
 POSITIONAL=()
@@ -84,12 +83,17 @@ if [[ "$(get_subnetwork)" == *"Too much subnet"* ]]; then
     echo "Do you want to reduce the network to a /24 ? (y/N)"
     read -r RESPONSE
     if [[ "${RESPONSE}" != *"y"* ]]; then
-        exit 1
+        echo "Which /24 do you want to scan ?"
+        read -r RESPONSE
+        function get_network {
+            echo "${RESPONSE}"
+        }
+    else
+        # Redefinition of get_network
+        function get_network {
+            ipcalc -n "$(get_ip)" | grep 'Network:' | awk '{print $2}' | awk -F'/' '{print $1"/24"}'
+        }
     fi
-    # Redefinition of get_network
-    function get_network {
-        ipcalc -n "$(get_ip)" | grep 'Network:' | awk '{print $2}' | awk -F'/' '{print $1"/24"}'
-    }
     function get_subnetwork {
         get_network
     }

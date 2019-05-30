@@ -6,8 +6,8 @@ function help_22 {
     fi
     for ipaddress in $(grep '22/OPEN/ssh' /tmp/.watcha.output | awk '{print $1}')
     do
-        if $VERBOSE; then echo ">> " curl -sLk --connect-timeout 2 --max-time 2 -A '""' http://"$ipaddress":22/ 2>/dev/null; fi
-        echo "    ${ipaddress}  ==> ${BLUE}$(curl -sLk --connect-timeout 2 --max-time 2 -A \"\" http://"$ipaddress":22/ 2>/dev/null)${NATIVE}"
+        if $VERBOSE; then echo ">> " curl -sLk --connect-timeout 2 --max-time 2 -A '""' http://"${ipaddress}":22/ 2>/dev/null; fi
+        echo "    ${ipaddress}  ==> ${BLUE}$(curl -sLk --connect-timeout 2 --max-time 2 -A \"\" http://"${ipaddress}":22/ 2>/dev/null)${NATIVE}"
     done
 }
 
@@ -17,8 +17,8 @@ function help_80 {
     fi
     for ipaddress in $(grep '80/OPEN/http' /tmp/.watcha.output | awk '{print $1}')
     do
-        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' http://"$ipaddress":80/ "| grep 'Server: ' | tail -1"; fi
-        echo "    http://${ipaddress}:80/  ==> ${BLUE}$(curl -sILk  --connect-timeout 2 --max-time 2 -A \"\" http://"$ipaddress":80/ | grep 'Server: ' | tail -1)${NATIVE}"
+        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' http://"${ipaddress}":80/ "| grep 'Server: ' | tail -1"; fi
+        echo "    http://${ipaddress}:80/  ==> ${BLUE}$(curl -sILk  --connect-timeout 2 --max-time 2 -A \"\" http://"${ipaddress}":80/ | grep 'Server: ' | tail -1)${NATIVE}"
     done
 }
 
@@ -28,10 +28,10 @@ function help_443 {
     fi
     for ipaddress in $(grep '443/OPEN/https' /tmp/.watcha.output | awk '{print $1}')
     do
-        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' https://"$ipaddress":443/ "| grep 'Server: ' | tail -1"; fi
-        echo "    https://${ipaddress}:443/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" https://"$ipaddress":443/ | grep 'Server: ' | tail -1)${NATIVE}"
-        if $VERBOSE; then echo ">> " curl -vsk  --connect-timeout 2 --max-time 2 -A '""' https://"$ipaddress":443/ " 2>&1 >/dev/null | grep 'subject: ' | tail -1"; fi
-        echo "    https://${ipaddress}:443/  ==> ${BLUE}$(curl -vsk --connect-timeout 2 --max-time 2 -A \"\" https://"$ipaddress":443/ 2>&1 >/dev/null | grep 'subject: ' | tail -1)${NATIVE}"
+        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' https://"${ipaddress}":443/ "| grep 'Server: ' | tail -1"; fi
+        echo "    https://${ipaddress}:443/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" https://"${ipaddress}":443/ | grep 'Server: ' | tail -1)${NATIVE}"
+        if $VERBOSE; then echo ">> " curl -vsk  --connect-timeout 2 --max-time 2 -A '""' https://"${ipaddress}":443/ " 2>&1 >/dev/null | grep 'subject: ' | tail -1"; fi
+        echo "    https://${ipaddress}:443/  ==> ${BLUE}$(curl -vsk --connect-timeout 2 --max-time 2 -A \"\" https://"${ipaddress}":443/ 2>&1 >/dev/null | grep 'subject: ' | tail -1)${NATIVE}"
     done
 }
 
@@ -52,8 +52,8 @@ function help_2049 {
     fi
     for ipaddress in $(grep '2049/OPEN/nfs' /tmp/.watcha.output | awk '{print $1}')
     do
-        if $VERBOSE; then echo ">>  showmount -e "$ipaddress; fi
-        echo "    showmount -e ${ipaddress}  ==> ${BLUE}$(showmount -e $ipaddress)${NATIVE}"
+        if $VERBOSE; then echo ">>  showmount -e ${ipaddress}"; fi
+        echo "    showmount -e ${ipaddress}  ==> ${BLUE}$(showmount -e ${ipaddress})${NATIVE}"
     done
 }
 
@@ -63,8 +63,8 @@ function help_8080 {
     fi
     for ipaddress in $(grep '8080/OPEN/http-proxy' /tmp/.watcha.output | awk '{print $1}')
     do
-        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' http://"$ipaddress":8080/ "| grep 'Server: ' | tail -1"; fi
-        echo "    http://${ipaddress}:8080/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" http://"$ipaddress":8080/ | grep 'Server: ' | tail -1)${NATIVE}"
+        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' http://"${ipaddress}":8080/ "| grep 'Server: ' | tail -1"; fi
+        echo "    http://${ipaddress}:8080/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" http://"${ipaddress}":8080/ | grep 'Server: ' | tail -1)${NATIVE}"
     done
 }
 
@@ -74,12 +74,12 @@ function help_9000 {
     fi
     for ipaddress in $(grep '9000/OPEN/cslistener' /tmp/.watcha.output | awk '{print $1}')
     do
-        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' http://"$ipaddress":9000/ "| grep 'Server: ' | tail -1"; fi
-        echo "    http://${ipaddress}:9000/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" http://"$ipaddress":9000/ | grep 'Server: ' | tail -1)${NATIVE}"
-        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' https://"$ipaddress":9000/ "| grep 'Server: ' | tail -1"; fi
-        echo "    https://${ipaddress}:9000/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" https://"$ipaddress":9000/ | grep 'Server: ' | tail -1)${NATIVE}"
-        if $VERBOSE; then echo ">> " curl -vsk  --connect-timeout 2 --max-time 2 -A '""' https://"$ipaddress":9000/ " 2>&1 >/dev/null | grep 'subject: ' | tail -1"; fi
-        echo "    https://${ipaddress}:9000/  ==> ${BLUE}$(curl -vsk --connect-timeout 2 --max-time 2 -A \"\" https://"$ipaddress":9000/ 2>&1 >/dev/null | grep 'subject: ' | tail -1)${NATIVE}"
+        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' http://"${ipaddress}":9000/ "| grep 'Server: ' | tail -1"; fi
+        echo "    http://${ipaddress}:9000/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" http://"${ipaddress}":9000/ | grep 'Server: ' | tail -1)${NATIVE}"
+        if $VERBOSE; then echo ">> " curl -sILk  --connect-timeout 2 --max-time 2 -A '""' https://"${ipaddress}":9000/ "| grep 'Server: ' | tail -1"; fi
+        echo "    https://${ipaddress}:9000/  ==> ${BLUE}$(curl -sILk --connect-timeout 2 --max-time 2 -A \"\" https://"${ipaddress}":9000/ | grep 'Server: ' | tail -1)${NATIVE}"
+        if $VERBOSE; then echo ">> " curl -vsk  --connect-timeout 2 --max-time 2 -A '""' https://"${ipaddress}":9000/ " 2>&1 >/dev/null | grep 'subject: ' | tail -1"; fi
+        echo "    https://${ipaddress}:9000/  ==> ${BLUE}$(curl -vsk --connect-timeout 2 --max-time 2 -A \"\" https://"${ipaddress}":9000/ 2>&1 >/dev/null | grep 'subject: ' | tail -1)${NATIVE}"
     done
 }
 
