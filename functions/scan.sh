@@ -46,9 +46,9 @@ function get_subnetwork {
         IPCALC_ARGS=
         for _ in $(seq "${N_24}")
         do
-            IPCALC_ARGS="${IPCALC_ARGS}" 24
+            IPCALC_ARGS=$(echo "${IPCALC_ARGS}" 24)
         done
-        ipcalc -n "$(get_network)" "${IPCALC_ARGS}" | grep 'Network: ' | awk '{print $2}' | tail -"${N_24}"
+        ipcalc -n "$(get_network)" "${IPCALC_ARGS}" | grep 'Network: ' | awk '{print $2}' | tail -$N_24
     else
         get_network
     fi
