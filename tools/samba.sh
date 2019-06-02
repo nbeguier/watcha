@@ -2,6 +2,11 @@
 
 ipaddress=$1
 
+if [ -z "${ipaddress}" ]; then
+    echo "Usage: $0 <ipaddress>"
+    exit 1
+fi
+
 function check_binary() {
     if ! command -v "${1}" >/dev/null; then echo "You have to install $1"; exit 1; fi
 }

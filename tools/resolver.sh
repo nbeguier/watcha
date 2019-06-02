@@ -1,6 +1,12 @@
 #!/bin/bash
 
-NETWORK=${1:-192.168.0}   
+NETWORK=${1}
+
+if [ -z "${NETWORK}" ]; then
+    echo "Usage: $0 <NETWORK>"
+    echo "Ex: $0 192.168.0 # It should always be a /24 without the last byte"
+    exit 1
+fi
 
 function resolve {
     IP=$1

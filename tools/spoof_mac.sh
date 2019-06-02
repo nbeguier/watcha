@@ -2,8 +2,8 @@
 
 INET=$1
 
-if [  "${INET}" == '' ]; then
-    echo "You should specify an interface."
+if [ -z "${INET}" ]; then
+    echo "Usage: $0 <INET>"
     exit 1
 fi
 

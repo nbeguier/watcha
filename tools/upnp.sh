@@ -4,6 +4,11 @@
 
 INET=$1
 
+if [ -z "${INET}" ]; then
+    echo "Usage: $0 <INET>"
+    exit 1
+fi
+
 # unlock sudo
 sudo ls >/dev/null
 
