@@ -17,12 +17,13 @@ check_binary ip
 # unlock sudo
 sudo ls >/dev/null
 
-sudo ip link set dev "${INET}" down
-
 echo ">>SPOOF MAC"
 echo "${BOLD}$(ip link show "${INET}" | grep ether)${NATIVE}"
 echo "will become ..."
+echo sudo ip link set dev "${INET}" address "${MAC}"
 sudo ip link set dev "${INET}" address "${MAC}"
 echo "${BOLD}$(ip link show "${INET}" | grep ether)${NATIVE}"
+
+sudo ip link set dev "${INET}" down
 
 sudo ip link set dev "${INET}" up
