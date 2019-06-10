@@ -1,7 +1,7 @@
 #!/bin/bash
 
 URL=http://192.168.0.1:1900
-CONTROL_PATH=/control?WFAWLANConfig
+CONTROL_PATH='/control?WFAWLANConfig'
 SERVICE_TYPE=urn:schemas-wifialliance-org:service:WFAWLANConfig:1
 ACTION=GetDeviceInfo
 BODY=''
