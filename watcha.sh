@@ -1,13 +1,13 @@
 #!/bin/bash
 
-PORTS='21,22,25,80,443,445,2049,8080,9000'
 ESC=$(printf '\033')
-BOLD="${ESC}[1m"
-GREEN="${ESC}[92m"
-YELLOW="${ESC}[93m"
-BLUE="${ESC}[94m"
-NATIVE="${ESC}[m"
-VERBOSE=false
+export PORTS='21,22,25,80,443,445,2049,8080,9000'
+export BOLD="${ESC}[1m"
+export GREEN="${ESC}[92m"
+export YELLOW="${ESC}[93m"
+export BLUE="${ESC}[94m"
+export NATIVE="${ESC}[m"
+export VERBOSE=false
 
 function check_binary() {
     if ! command -v "${1}" >/dev/null; then echo "You have to install $1"; exit 1; fi
@@ -58,9 +58,12 @@ check_binary bc
 check_binary sudo
 check_binary ip
 
-source "$(dirname $0)"/functions/scan.sh
-source "$(dirname $0)"/functions/link.sh
-source "$(dirname $0)"/functions/help.sh
+# shellcheck source=functions/scan.sh
+source "$(dirname "${0}")/functions/scan.sh"
+# shellcheck source=functions/scan.sh
+source "$(dirname "${0}")/functions/link.sh"
+# shellcheck source=functions/scan.sh
+source "$(dirname "${0}")/functions/help.sh"
 
 SPOOF=$(get_rand_ip_complex)
 IP=$(get_ip)

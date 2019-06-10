@@ -1,0 +1,5 @@
+language: shell
+script:
+  - bash -c 'shellcheck -x watcha.sh'
+  - bash -c 'shellcheck tools/*.sh'
+  - bash -c 'shellcheck functions/*.sh'
