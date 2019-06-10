@@ -1,6 +1,6 @@
 # watcha
 
-![Bash](https://img.shields.io/badge/bash-grey.svg)
+![Bash](https://img.shields.io/badge/bash-grey.svg) [![License](https://img.shields.io/badge/Licence-Apache%202.0-blue.svg)](https://github.com/nbeguier/watcha/blob/master/LICENSE)
 
 ## Usage
 
