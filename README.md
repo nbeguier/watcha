@@ -1,5 +1,7 @@
 # watcha
 
+![Bash](https://img.shields.io/badge/bash-grey.svg)
+
 ## Usage
 
 ```bash
