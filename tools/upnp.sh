@@ -20,7 +20,7 @@ MX: 1
 ST: ssdp:all" > /tmp/ssdp_discover.txt
 
 # Listen interface to get the responses
-sudo tcpdump -i any -u -n -A -s0 'port 1900' 1>/tmp/trace 2>/dev/null &
+sudo tcpdump -i "${INET}" -u -n -A -s0 'port 1900' 1>/tmp/trace 2>/dev/null &
 
 # Send the SSDP request
 nc -b "${INET}" -w 1 -uvv 239.255.255.250 1900 >/dev/null < /tmp/ssdp_discover.txt

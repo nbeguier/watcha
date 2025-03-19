@@ -16,7 +16,8 @@ function check_binary() {
 display_usage() { 
     echo -e "Usage:\n$0 [-h,--help] [-v,--verbose] -i interface"
     check_binary ip
-    echo "Interfaces available: $(ip a | grep '^[a-z0-9]' | awk -F ':' '{print $1}')"
+    echo "Interfaces available:"
+    echo "$(ip a | grep 'status UP' | grep '^[a-z0-9]' | awk -F ':' '{print $1":"$2}')"
 }
 
 POSITIONAL=()

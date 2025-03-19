@@ -105,7 +105,7 @@ MAC Address: B8:27:EB:28:XX:XX (Raspberry Pi Foundation)
 ### .local resolver
 
 ```
-$ ./tools/resolver.sh
+$ ./tools/resolver.sh 192.168.0
 192.168.0.2 <=> something.local.
 192.168.0.29 <=> iphone-someone.local.
 ```

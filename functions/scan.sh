@@ -43,12 +43,28 @@ function get_subnetwork {
         echo "Too much subnet"
         exit 1
     elif [ "${N_24}" -ne 1 ]; then
-        IPCALC_ARGS=
-        for _ in $(seq "${N_24}")
-        do
-            IPCALC_ARGS="${IPCALC_ARGS} 24"
+        # Fonction pour convertir une adresse IP en entier
+        ip2int() {
+            local IFS=.
+            read -r a b c d <<< "$1"
+            echo $(( (a << 24) | (b << 16) | (c << 8) | d ))
+        }
+
+        # Fonction pour convertir un entier en adresse IP
+        int2ip() {
+            local ip=$1
+            echo "$(( (ip >> 24) & 0xFF )).$(( (ip >> 16) & 0xFF )).$(( (ip >> 8) & 0xFF )).$(( ip & 0xFF ))"
+        }
+
+        # Conversion de l'adresse de base
+        BASE=$(ip2int $(get_network))
+
+        # Le nombre de /24 dans une /21 est de 2^(24-21)=8
+        for i in $(seq "${N_24}"); do
+            # Pour chaque sous-réseau, ajouter i*256 à l'adresse de base
+            NEW_IP=$(int2ip $(( BASE + i * 256 )))
+            echo "$NEW_IP/24"
         done
-        ipcalc -n "$(get_network)" "${IPCALC_ARGS}" | grep 'Network: ' | awk '{print $2}' | tail -"${N_24}"
     else
         get_network
     fi
