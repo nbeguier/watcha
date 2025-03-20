@@ -62,7 +62,7 @@ function get_subnetwork {
         # Le nombre de /24 dans une /21 est de 2^(24-21)=8
         for i in $(seq "${N_24}"); do
             # Pour chaque sous-réseau, ajouter i*256 à l'adresse de base
-            NEW_IP=$(int2ip $(( BASE + i * 256 )))
+            NEW_IP=$(int2ip $(( BASE + (i-1) * 256 )))
             echo "$NEW_IP/24"
         done
     else
