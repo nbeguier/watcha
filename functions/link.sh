@@ -15,9 +15,9 @@ function link_22 {
 }
 
 function link_80 {
-    if grep -q '80/OPEN/http' /tmp/.watcha.output; then
+    if grep -q ' 80/OPEN/http' /tmp/.watcha.output; then
         echo "${YELLOW}HTTP link:${NATIVE}"
-        grep '80/OPEN/http' /tmp/.watcha.output | awk '{print "    curl -A \"\" http://"$1":80/ >/dev/null -vs"}'
+        grep ' 80/OPEN/http' /tmp/.watcha.output | awk '{print "    curl -A \"\" http://"$1":80/ >/dev/null -vs"}'
     fi
 }
 

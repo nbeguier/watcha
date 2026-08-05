@@ -13,8 +13,12 @@ function check_binary() {
     if ! command -v "${1}" >/dev/null; then echo "You have to install $1"; exit 1; fi
 }
 
-display_usage() { 
-    echo -e "Usage:\n$0 [-h,--help] [-v,--verbose] -i interface"
+display_usage() {
+    echo -e "Usage:\n$0 [-h,--help] [-v,--verbose] [-r,--range range] [-n,--no-spoof] -i interface"
+    echo "  -r,--range   nmap target to scan instead of the interface network"
+    echo "               (e.g. 10.0.0.0/24, 192.168.1.10-50, \"host1 host2\")"
+    echo "  -n,--no-spoof  scan from the real IP instead of a spoofed source"
+    echo "               (needed when the range is off the interface network)"
     check_binary ip
     echo "Interfaces available:"
     echo "$(ip a | grep 'status UP' | grep '^[a-z0-9]' | awk -F ':' '{print $1":"$2}')"
@@ -30,6 +34,15 @@ case $key in
     DEV="$2"
     shift # past argument
     shift # past value
+    ;;
+    -r|--range)
+    RANGE="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -n|--no-spoof)
+    NO_SPOOF=true
+    shift # past argument
     ;;
     -h|--help)
     display_usage
@@ -66,7 +79,11 @@ source "$(dirname "${0}")/functions/link.sh"
 # shellcheck source=functions/scan.sh
 source "$(dirname "${0}")/functions/help.sh"
 
-SPOOF=$(get_rand_ip_complex)
+if [ "${NO_SPOOF}" == 'true' ]; then
+    SPOOF=''
+else
+    SPOOF=$(get_rand_ip_complex)
+fi
 IP=$(get_ip)
 
 # Stop if no IP
@@ -81,8 +98,15 @@ echo "${BOLD}Network${NATIVE}:    $(get_network)"
 echo "${BOLD}Gateway${NATIVE}:    $(get_gateway)"
 echo "${BOLD}Spoofed IP${NATIVE}: ${SPOOF}"
 
+# Use the user-supplied range instead of the interface network
+if [ -n "${RANGE}" ]; then
+    # Redefinition of get_subnetwork
+    function get_subnetwork {
+        echo "${RANGE}"
+    }
+    echo "${BOLD}Range${NATIVE}:      ${RANGE}"
 # Stop if network to large
-if [[ "$(get_subnetwork)" == *"Too much subnet"* ]]; then
+elif [[ "$(get_subnetwork)" == *"Too much subnet"* ]]; then
     echo "Too much subnet..."
     echo "Do you want to reduce the network to a /24 ? (y/N)"
     read -r RESPONSE

@@ -1,12 +1,17 @@
 # watcha
 
-[![Build Status](https://travis-ci.org/nbeguier/watcha.svg?branch=master)](https://travis-ci.org/nbeguier/watcha) ![Bash](https://img.shields.io/badge/bash-grey.svg) [![License](https://img.shields.io/badge/Licence-Apache%202.0-blue.svg)](https://github.com/nbeguier/watcha/blob/master/LICENSE)
+![Bash](https://img.shields.io/badge/bash-grey.svg) [![License](https://img.shields.io/badge/Licence-Apache%202.0-blue.svg)](https://github.com/nbeguier/watcha/blob/master/LICENSE)
 
 ## Usage
 
 ```bash
-./watcha.sh [-h,--help] [-v,--verbose] -i interface
+./watcha.sh [-h,--help] [-v,--verbose] [-r,--range range] [-n,--no-spoof] -i interface
 ```
+
+  - `-i, --interface` : interface used for the scan (spoofed source and egress).
+  - `-r, --range` : nmap target to scan instead of the interface network (e.g. `10.0.0.0/24`, `192.168.1.10-50`, `"host1 host2"`).
+  - `-n, --no-spoof` : scan from the real IP instead of a spoofed source (needed when the range is off the interface network).
+  - `-v, --verbose` : print the underlying commands before running them.
 
 ## Installation
 

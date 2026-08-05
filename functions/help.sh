@@ -16,12 +16,12 @@ function help_22 {
 }
 
 function help_80 {
-    if grep -q '80/OPEN/http' /tmp/.watcha.output; then
+    if grep -q ' 80/OPEN/http' /tmp/.watcha.output; then
         echo "${YELLOW}HTTP help:${NATIVE}"
     fi
     while read -r line
     do
-        if [[ "${line}" != *'80/OPEN/http'* ]]; then
+        if [[ "${line}" != *' 80/OPEN/http'* ]]; then
             continue
         fi
         ipaddress=$(echo "${line}" | awk '{print $1}')
